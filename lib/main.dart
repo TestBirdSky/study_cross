@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:scroll_date_picker/scroll_date_picker.dart';
 import 'package:study_flutter/base/BaseController.dart';
 import 'package:study_flutter/base/BaseStateWidget.dart';
 import 'package:study_flutter/log.dart';
@@ -82,10 +85,10 @@ class MyApp2 extends BaseStateWidget<MyAppC> {
 
   @override
   MyAppC initController() => MyAppC();
-  final List<Widget> _children = [
+  late List<Widget> _children = [
     TestPage(title: 'Home2'),
-    TestPage(title: 'Search2'),
-    GetViewText()
+    GetViewText(),
+    TestDatePicker()
   ];
 
   @override
@@ -144,6 +147,7 @@ class MyApp2 extends BaseStateWidget<MyAppC> {
 
 class MyAppC extends BaseController {
   var curIndex = 0;
+  var isChecked = false;
 
   void onTabTapped(int index) {
     curIndex = index;
@@ -200,6 +204,25 @@ class TestPage extends BaseStateWidget<TestC> {
   }
 }
 
+var _listView = [
+  Container(
+    height: 50,
+    color: Colors.amber,
+    child: Text("item133333"),
+  ),
+  Text("item2"),
+  Text("item3"),
+  Text("item1"),
+  Text("item2"),
+  Text("item3"),
+  Text("item4"),
+  Text("item133"),
+  Text("item2"),
+  Text("item3"),
+  Text("item4"),
+  Text("item133"),
+];
+
 class TestC extends BaseController {
   var isChecked = false;
 }
@@ -210,54 +233,123 @@ class GetViewText extends GetView<MyAppC> {
 
   @override
   Widget build(BuildContext context) {
-    return Ink(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blue, Colors.green], // 渐变色
-        ),
-        borderRadius: BorderRadius.circular(8), // 圆角
-      ),
-      child: InkWell(
-        onTap: () {
-          // 处理点击事件
-        },
-        splashColor: Colors.white.withOpacity(0.3), // 设置墨水的颜色和透明度
-        child: Container(
-          padding: EdgeInsets.all(16),
-          child: Text('Click me!', style: TextStyle(color: Colors.white)),
-        ),
-      ),
-    );
-    Scaffold(
-      body: Container(
-        height: 56.h,
-        color: Colors.blue, // 设置背景色
-        child: InkResponse(
-          onTap: () {},
-          child: Ink(
-            color: Colors.red.withOpacity(0.3),
-            child: Padding(
-              padding: EdgeInsets.all(12.h),
-              child: Row(children: [
-                GetBuilder<MyAppC>(
-                    id: 'page',
-                    builder: (c) {
-                      return Expanded(child: Text('GetView${c.curIndex}'));
-                    }),
-                Text('GetView'),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 20.w,
-                )
-              ]),
+    return
+        //   Ink(
+        //   decoration: BoxDecoration(
+        //     gradient: LinearGradient(
+        //       colors: [Colors.blue, Colors.green], // 渐变色
+        //     ),
+        //     borderRadius: BorderRadius.circular(8), // 圆角
+        //   ),
+        //   child: InkWell(
+        //     onTap: () {
+        //       // 处理点击事件
+        //     },
+        //     splashColor: Colors.white.withOpacity(0.3), // 设置墨水的颜色和透明度
+        //     child: Container(
+        //       padding: EdgeInsets.all(16),
+        //       child: Text('Click me!', style: TextStyle(color: Colors.white)),
+        //     ),
+        //   ),
+        // );
+        Scaffold(
+            body: Column(
+      children: [
+        Container(
+          height: 56.h,
+          color: Colors.blue, // 设置背景色
+          child: InkResponse(
+            onTap: () {},
+            child: Ink(
+              color: Colors.red.withOpacity(0.3),
+              child: Padding(
+                padding: EdgeInsets.all(12.h),
+                child: Row(children: [
+                  GetBuilder<MyAppC>(
+                      id: 'page',
+                      builder: (c) {
+                        return Expanded(child: Text('GetView${c.curIndex}'));
+                      }),
+                  GetBuilder<MyAppC>(
+                      id: 'page',
+                      builder: (c) {
+                        return Container(
+                          height: 40.h,
+                          width: 60.w,
+                          child: Switch(
+                              value: c.isChecked,
+                              onChanged: (onChanged) {
+                                c.isChecked = onChanged;
+                                c.update(['page']);
+                              }),
+                        );
+                      }),
+                  GetBuilder<MyAppC>(
+                      id: 'page',
+                      builder: (c) {
+                        return Container(
+                          height: 40.h,
+                          width: 60.w,
+                          child: CupertinoSwitch(
+                              value: c.isChecked,
+                              activeColor: Colors.amber,
+                              trackColor: Colors.red,
+                              onChanged: (onChanged) {
+                                c.isChecked = onChanged;
+                                c.update(['page']);
+                              }),
+                        );
+                      }),
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    size: 20.w,
+                  )
+                ]),
+              ),
             ),
           ),
         ),
+      ],
+    ));
+  }
+}
+
+class TestDatePicker extends BaseStateWidget<DatePickerC> {
+  @override
+  DatePickerC initController() => DatePickerC();
+
+  @override
+  Widget initWidget(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+              padding: EdgeInsets.all(16),
+              child: SizedBox(
+                  height: 180,
+                  width: 200,
+                  child: GetBuilder<DatePickerC>(
+                      id: 'pick',
+                      builder: (c) {
+                        return ScrollDatePicker(
+                            selectedDate: controller.selected,
+                            locale: Locale('zh'),
+                            onDateTimeChanged: (DateTime value) {
+                              controller.selected = value;
+                              controller.update(['pick']);
+                            });
+                      }))),
+          Wrap(
+            spacing: 20.w,
+            runSpacing: 10.w,
+            children: _listView,
+          )
+        ],
       ),
     );
   }
 }
 
-class GetViewC extends BaseController {
-  var test = 0;
+class DatePickerC extends BaseController {
+  var selected = DateTime.now();
 }
