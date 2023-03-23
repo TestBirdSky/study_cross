@@ -2,11 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
 import 'package:study_flutter/base/BaseController.dart';
 import 'package:study_flutter/base/BaseStateWidget.dart';
+import 'package:study_flutter/dialog.dart';
 import 'package:study_flutter/log.dart';
 
 void main() => runApp(MyApp2());
@@ -98,7 +100,7 @@ class MyApp2 extends BaseStateWidget<MyAppC> {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (context, child) {
-          return MaterialApp(
+          return GetMaterialApp(
             title: 'Bottom Navigation Bar Demo2',
             theme: ThemeData(
               primarySwatch: Colors.blue,
@@ -166,18 +168,149 @@ class TestPage extends BaseStateWidget<TestC> {
   @override
   Widget initWidget(BuildContext context) {
     logger.i("title$title");
-    return ListView(
+    return ListView(children: <Widget>[
+      Container(
+        height: 50.h,
+        child: PageView(
+          controller: PageController(initialPage: 0),
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+                borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                border: Border.all(width: 1.w),
+              ),
+              child: Column(
+                children: [Text("data111")],
+              ),
+              height: 50.h,
+            ),
+            Container(
+              child: Column(
+                children: [Text("data2222")],
+              ),
+              height: 50.h,
+            ),
+          ],
+        ),
+      ),
+      Container(
+        height: 50.h,
+        child: PageView(
+          controller: null,
+          children: [
+            Container(
+              child: Column(
+                children: [Text("data111")],
+              ),
+              height: 50.h,
+            ),
+            Container(
+              child: Column(
+                children: [Text("data2222")],
+              ),
+              height: 50.h,
+            ),
+          ],
+        ),
+      ),
+      Container(
+        height: 50.h,
+        child: PageView(
+          controller: PageController(initialPage: 1),
+          children: [
+            Container(
+              child: Column(
+                children: [Text("data111")],
+              ),
+              height: 50.h,
+            ),
+            Container(
+              child: Column(
+                children: [Text("data2222")],
+              ),
+              height: 50.h,
+            ),
+          ],
+        ),
+      ),
+      Container(
+        height: 50.h,
+        child: PageView(
+          controller: PageController(initialPage: 1),
+          children: [
+            Container(
+              child: Column(
+                children: [Text("data111")],
+              ),
+              height: 50.h,
+            ),
+            Container(
+              child: Column(
+                children: [Text("data2222")],
+              ),
+              height: 50.h,
+            ),
+          ],
+        ),
+      ),
+      Slidable(
+          child: Row(
+            children: [
+              Container(
+                height: 30.h,
+                child: Text(title),
+              )
+            ],
+          ),
+          startActionPane: ActionPane(
+            motion: ScrollMotion(),
+            children: [
+              //左侧按钮列表
+              SlidableAction(
+                onPressed: _showSnackBar('111'),
+                backgroundColor: Color(0xFFFE4A49),
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'Delete',
+              ),
+              CustomSlidableAction(
+                onPressed: _showSnackBar('custom'),
+                autoClose: true,
+                child: Text("322211111122227777777777777"),
+              )
+              // SlidableAction(
+              //   onPressed: _showSnackBar('Share'),
+              //   backgroundColor: Color(0xFF21B7CA),
+              //   foregroundColor: Colors.white,
+              //   icon: Icons.share,
+              //   label: 'Share',
+              // ),
+            ],
+          ),
+          endActionPane: ActionPane(
+            motion: ScrollMotion(),
+            children: [
+              //左侧按钮列表
+              SlidableAction(
+                onPressed: _showSnackBar('222'),
+                backgroundColor: Color(0xFFFE4A49),
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'Delete',
+              ),
+              SlidableAction(
+                onPressed: _showSnackBar('Share'),
+                backgroundColor: Color(0xFF21B7CA),
+                foregroundColor: Colors.white,
+                icon: Icons.share,
+                label: 'Share',
+              ),
+            ],
+          ))
+    ]);
+    ListView(
       children: [
-        GetBuilder<TestC>(
-            id: 'check',
-            builder: (c) {
-              return Checkbox(
-                  value: controller.isChecked,
-                  onChanged: (onChanged) {
-                    controller.isChecked = onChanged ?? false;
-                    controller.update(['check']);
-                  });
-            }),
         Padding(padding: EdgeInsets.only(top: 300)),
         Text("item1"),
         Text("item2"),
@@ -202,6 +335,10 @@ class TestPage extends BaseStateWidget<TestC> {
       ],
     );
   }
+}
+
+_showSnackBar(String s) {
+  logger.i("s$s");
 }
 
 var _listView = [
@@ -296,6 +433,10 @@ class GetViewText extends GetView<MyAppC> {
                               trackColor: Colors.red,
                               onChanged: (onChanged) {
                                 c.isChecked = onChanged;
+                                if (onChanged)
+                                  DialogUtil.show();
+                                else
+                                  DialogUtil.dismiss();
                                 c.update(['page']);
                               }),
                         );
