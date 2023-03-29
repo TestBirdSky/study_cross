@@ -52,7 +52,7 @@ class DialogUtil {
         ),
       ),
       barrierColor: Color(0x00000000),
-      // barrierDismissible: false,
+      barrierDismissible: false,
     );
   }
 
