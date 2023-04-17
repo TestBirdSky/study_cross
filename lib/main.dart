@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -12,6 +15,7 @@ import 'package:study_flutter/base/BaseStateWidget.dart';
 import 'package:study_flutter/dialog.dart';
 import 'package:study_flutter/log.dart';
 import 'package:study_flutter/widget/bottom_menu.dart';
+import 'package:study_flutter/widget/list_note.dart';
 
 void main() => runApp(MyApp2());
 
@@ -198,6 +202,7 @@ class MyApp2 extends BaseStateWidget<MyAppC> {
               //   },
               // ),),
             ),
+            builder:EasyLoading.init(),
           );
         });
   }
@@ -537,6 +542,12 @@ class TestDatePicker extends BaseStateWidget<DatePickerC> {
                               controller.update(['pick']);
                             });
                       }))),
+          GestureDetector(onTap: () async{
+            // EasyLoading.show(status: 'loading...');
+            // sleep(Duration(seconds: 2));
+            // EasyLoading.dismiss();
+            Get.to(ListNote());
+          },child: Container(width: 10,height: 30,child: Text('test'),),),
           Wrap(
             spacing: 20.w,
             runSpacing: 10.w,
@@ -555,12 +566,13 @@ class DatePickerC extends BaseController {
 class ListPageTest extends GetView<MyAppC> {
   @override
   Widget build(BuildContext context) {
-    return MasonryGridView.count(
-        itemCount: 30,
-        crossAxisCount: 2,
-        itemBuilder: (BuildContext context, int index) {
-          return _ItemList2(index);
-        });
+    return ListView(children: _ItemList(),);
+    // return MasonryGridView.count(
+    //     itemCount: 30,
+    //     crossAxisCount: 2,
+    //     itemBuilder: (BuildContext context, int index) {
+    //       return _ItemList2(index);
+    //     });
   }
 
   List<Widget> _ItemList() {
