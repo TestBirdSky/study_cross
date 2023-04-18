@@ -18,13 +18,19 @@ class ListNote extends BaseStateWidget<ListNoteC> {
       _item("100jijij\njjjj\njijij\njjjj\njijij\njjjj\njjj\njijij\njjjj\n"),
       _item("100jijij\njjjj\njijij\njjjj\njijij\njjjj\njjj\njijij\njjjj\njjj\njijij\njjjj\njjj\njijij\njjjj\n"),
     ];
-    return Stack(
-      children: [
-        ListView(
-          shrinkWrap: true,
-          children: list,
-        ),
-      ],
+    //dialog Material()
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("data"),
+      ),
+      body: Stack(
+        children: [
+          ListView(
+            shrinkWrap: true,
+            children: list,
+          ),
+        ],
+      ),
     );
   }
 

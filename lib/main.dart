@@ -99,7 +99,7 @@ class MyApp2 extends BaseStateWidget<MyAppC> {
   MyAppC initController() => MyAppC();
   late List<Widget> _children = [
     TestPage(title: 'Home2'),
-    ListPageTest(),
+    GetViewText(),
     TestDatePicker()
   ];
 
@@ -457,7 +457,13 @@ class GetViewText extends GetView<MyAppC> {
                 height: 56.h,
                 color: Colors.blue, // 设置背景色
                 child: InkResponse(
-                  onTap: () {},
+                  onTap: () async{
+                     // EasyLoading.show(status: 'loading...');
+                     // await Future.delayed(Duration(seconds: 2));
+                     // EasyLoading.dismiss();
+                    dialog2();
+                    // Future.
+                  },
                   child: Ink(
                     color: Colors.red.withOpacity(0.3),
                     child: Padding(

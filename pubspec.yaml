@@ -46,6 +46,7 @@ dependencies:
   permission_handler: ^10.2.0
   #https://github.com/nslogx/flutter_easyloading/blob/master/README-zh_CN.md
   flutter_easyloading: ^3.0.3
+#  webview_flutter: ^4.0.7
 
 dev_dependencies:
   flutter_test:
