@@ -6,13 +6,13 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:scroll_date_picker/scroll_date_picker.dart';
 import 'package:study_flutter/base/BaseController.dart';
 import 'package:study_flutter/base/BaseStateWidget.dart';
 import 'package:study_flutter/dialog.dart';
+import 'package:study_flutter/list2.dart';
 import 'package:study_flutter/log.dart';
 import 'package:study_flutter/widget/bottom_menu.dart';
 import 'package:study_flutter/widget/list_note.dart';
@@ -461,8 +461,8 @@ class GetViewText extends GetView<MyAppC> {
                      // EasyLoading.show(status: 'loading...');
                      // await Future.delayed(Duration(seconds: 2));
                      // EasyLoading.dismiss();
-                    dialog2();
-                    // Future.
+                    // dialog2();
+                    Get.to(ListPage());
                   },
                   child: Ink(
                     color: Colors.red.withOpacity(0.3),
@@ -473,7 +473,7 @@ class GetViewText extends GetView<MyAppC> {
                             id: 'page',
                             builder: (c) {
                               return Expanded(
-                                  child: Text('GetView${c.curIndex}'));
+                                  child: Text('Test${c.curIndex}'));
                             }),
                         GetBuilder<MyAppC>(
                             id: 'page',
