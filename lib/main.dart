@@ -552,7 +552,8 @@ class TestDatePicker extends BaseStateWidget<DatePickerC> {
             // EasyLoading.show(status: 'loading...');
             // sleep(Duration(seconds: 2));
             // EasyLoading.dismiss();
-            Get.to(ListNote());
+            // Get.to(ListNote());
+            dialog3();
           },child: Container(width: 10,height: 30,child: Text('test'),),),
           Wrap(
             spacing: 20.w,

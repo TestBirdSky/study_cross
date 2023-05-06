@@ -129,3 +129,45 @@ void dialog2() {
     // barrierDismissible: false,
   );
 }
+
+void dialog3() {
+  final list = <Widget>[];
+  for (int i = 0; i < 100; i++) {
+    list.add(
+      Container(
+        child: Align(alignment:Alignment.center,child: Text('data$i')),
+        height: 40.h,
+      ),
+    );
+  }
+  FixedExtentScrollController hourScrollController =
+      FixedExtentScrollController(initialItem: 10);
+  Get.dialog(
+    barrierColor: Color(0x00000000),
+    barrierDismissible: true,
+    Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        height: 120.h,
+        color: Colors.grey.shade100,
+        child: Stack(
+          children: [
+            Align(child: Container(
+              height: 40.h,
+              color: Colors.grey,),),
+            ListWheelScrollView(
+                controller: hourScrollController,
+                physics: FixedExtentScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
+                itemExtent: 40.h,
+                children: list,
+                onSelectedItemChanged: (index) {
+                  logger.i("message$index");
+                }),
+          ],
+        ),
+      ),
+    ),
+  );
+}
