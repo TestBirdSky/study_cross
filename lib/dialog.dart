@@ -130,41 +130,82 @@ void dialog2() {
   );
 }
 
-void dialog3() {
+Future<dynamic> dialog3() {
   final list = <Widget>[];
   for (int i = 0; i < 100; i++) {
     list.add(
       Container(
-        child: Align(alignment:Alignment.center,child: Text('data$i')),
+        child: Align(alignment: Alignment.center, child: Text('data$i')),
         height: 40.h,
       ),
     );
   }
   FixedExtentScrollController hourScrollController =
       FixedExtentScrollController(initialItem: 10);
-  Get.dialog(
+  return Get.dialog(
     barrierColor: Color(0x00000000),
     barrierDismissible: true,
     Align(
       alignment: Alignment.bottomCenter,
-      child: Container(
-        height: 120.h,
-        color: Colors.grey.shade100,
-        child: Stack(
+      child:
+      Container(
+        height: 160.h,
+        child: Column(
           children: [
-            Align(child: Container(
+            Container(
               height: 40.h,
-              color: Colors.grey,),),
-            ListWheelScrollView(
-                controller: hourScrollController,
-                physics: FixedExtentScrollPhysics(
-                  parent: BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      child: Text(
+                        '取消',
+                        style: TextStyle(color: Colors.black, fontSize: 16.sp),
+                      ),
+                      onTap: () {
+                        Get.back();
+                      },
+                    ),
+                    Expanded(
+                        child: Text('',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: Colors.black, fontSize: 18.sp))),
+                    GestureDetector(
+                      child: Text('确定',
+                          style: TextStyle(
+                              color: Color(0xffFEC693), fontSize: 16.sp)),
+                      onTap: () {
+                        Get.back(result:hourScrollController.selectedItem);
+                      },
+                    ),
+                  ],
                 ),
-                itemExtent: 40.h,
-                children: list,
-                onSelectedItemChanged: (index) {
-                  logger.i("message$index");
-                }),
+              ),
+            ),
+            Container(
+              height: 120.h,
+              color: Colors.grey.shade100,
+              child: Stack(
+                children: [
+                  Align(
+                    child: Container(
+                      height: 40.h,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  ListWheelScrollView(
+                      controller: hourScrollController,
+                      physics: FixedExtentScrollPhysics(
+                        parent: BouncingScrollPhysics(),
+                      ),
+                      itemExtent: 40.h,
+                      children: list,
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -132,10 +132,13 @@ class MyApp2 extends BaseStateWidget<MyAppC> {
                   ),
                   Align(
                       alignment: Alignment.bottomCenter,
-                      child: GetBuilder<MyAppC>(id: 'page', builder: (c) {
-                        return BottomMenu(
-                            controller.curIndex, controller.onTabTapped);
-                      },)
+                      child: GetBuilder<MyAppC>(
+                        id: 'page',
+                        builder: (c) {
+                          return BottomMenu(
+                              controller.curIndex, controller.onTabTapped);
+                        },
+                      )
                     // Container(
                     //   height: 70.h,
                     //   margin: EdgeInsets.symmetric(horizontal: 8.w),
@@ -202,7 +205,7 @@ class MyApp2 extends BaseStateWidget<MyAppC> {
               //   },
               // ),),
             ),
-            builder:EasyLoading.init(),
+            builder: EasyLoading.init(),
           );
         });
   }
@@ -457,10 +460,10 @@ class GetViewText extends GetView<MyAppC> {
                 height: 56.h,
                 color: Colors.blue, // 设置背景色
                 child: InkResponse(
-                  onTap: () async{
-                     // EasyLoading.show(status: 'loading...');
-                     // await Future.delayed(Duration(seconds: 2));
-                     // EasyLoading.dismiss();
+                  onTap: () async {
+                    // EasyLoading.show(status: 'loading...');
+                    // await Future.delayed(Duration(seconds: 2));
+                    // EasyLoading.dismiss();
                     // dialog2();
                     Get.to(ListPage());
                   },
@@ -472,8 +475,7 @@ class GetViewText extends GetView<MyAppC> {
                         GetBuilder<MyAppC>(
                             id: 'page',
                             builder: (c) {
-                              return Expanded(
-                                  child: Text('Test${c.curIndex}'));
+                              return Expanded(child: Text('Test${c.curIndex}'));
                             }),
                         GetBuilder<MyAppC>(
                             id: 'page',
@@ -548,13 +550,20 @@ class TestDatePicker extends BaseStateWidget<DatePickerC> {
                               controller.update(['pick']);
                             });
                       }))),
-          GestureDetector(onTap: () async{
-            // EasyLoading.show(status: 'loading...');
-            // sleep(Duration(seconds: 2));
-            // EasyLoading.dismiss();
-            // Get.to(ListNote());
-            dialog3();
-          },child: Container(width: 10,height: 30,child: Text('test'),),),
+          GestureDetector(
+            onTap: () async {
+              // EasyLoading.show(status: 'loading...');
+              // sleep(Duration(seconds: 2));
+              // EasyLoading.dismiss();
+              // Get.to(ListNote());
+              // dialog3().then((value) => {logger.i('message$value')});
+            },
+            child: Container(
+              width: 10,
+              height: 30,
+              child: Text('test'),
+            ),
+          ),
           Wrap(
             spacing: 20.w,
             runSpacing: 10.w,
@@ -573,7 +582,9 @@ class DatePickerC extends BaseController {
 class ListPageTest extends GetView<MyAppC> {
   @override
   Widget build(BuildContext context) {
-    return ListView(children: _ItemList(),);
+    return ListView(
+      children: _ItemList(),
+    );
     // return MasonryGridView.count(
     //     itemCount: 30,
     //     crossAxisCount: 2,
@@ -689,5 +700,44 @@ class ListPageTest extends GetView<MyAppC> {
         ),
       );
     }
+  }
+}
+
+typedef BtnCallback =void  Function(int index);
+class Btn extends StatelessWidget {
+  int index = 0;
+  BtnCallback? callback;
+
+  Btn(this.index, {this.callback});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap:(){
+              callback?.call(0);
+            },
+            child: Icon(
+              Icons.remove,
+              color: index == 0 ? Colors.red : Colors.grey,
+            ),
+          ),
+          GestureDetector(
+            onLongPress: (){
+            },
+            child: Icon(
+              Icons.add,
+              color: index == 0 ? Colors.red : Colors.grey,
+            ),
+          ),
+          Icon(
+            Icons.update,
+            color: index == 0 ? Colors.red : Colors.grey,
+          ),
+        ],
+      ),
+    );
   }
 }
