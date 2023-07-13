@@ -465,7 +465,8 @@ class GetViewText extends GetView<MyAppC> {
                     // await Future.delayed(Duration(seconds: 2));
                     // EasyLoading.dismiss();
                     // dialog2();
-                    Get.to(ListPage());
+                    DialogUtil.dialog4();
+                    // Get.to(ListPage());
                   },
                   child: Ink(
                     color: Colors.red.withOpacity(0.3),

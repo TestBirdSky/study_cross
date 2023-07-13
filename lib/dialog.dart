@@ -68,6 +68,33 @@ class DialogUtil {
       Get.back();
     }
   }
+
+  static void dialog4() {
+    Get.dialog(
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: Stack(
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  height: 480.h,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('data'),
+                      TextField(),
+                      Text(
+                          'data\ndata\ndata\ndata\ndata\ndata\ndata\ndata\ndata\ndata\n'),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+        barrierColor: Colors.transparent);
+  }
 }
 
 void dialog2() {
@@ -147,8 +174,7 @@ Future<dynamic> dialog3() {
     barrierDismissible: true,
     Align(
       alignment: Alignment.bottomCenter,
-      child:
-      Container(
+      child: Container(
         height: 160.h,
         child: Column(
           children: [
@@ -177,7 +203,7 @@ Future<dynamic> dialog3() {
                           style: TextStyle(
                               color: Color(0xffFEC693), fontSize: 16.sp)),
                       onTap: () {
-                        Get.back(result:hourScrollController.selectedItem);
+                        Get.back(result: hourScrollController.selectedItem);
                       },
                     ),
                   ],
@@ -196,12 +222,12 @@ Future<dynamic> dialog3() {
                     ),
                   ),
                   ListWheelScrollView(
-                      controller: hourScrollController,
-                      physics: FixedExtentScrollPhysics(
-                        parent: BouncingScrollPhysics(),
-                      ),
-                      itemExtent: 40.h,
-                      children: list,
+                    controller: hourScrollController,
+                    physics: FixedExtentScrollPhysics(
+                      parent: BouncingScrollPhysics(),
+                    ),
+                    itemExtent: 40.h,
+                    children: list,
                   ),
                 ],
               ),
